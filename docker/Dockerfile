@@ -3,7 +3,9 @@ FROM node:8
 RUN apt-get update
 RUN apt-get install -y git
 
-RUN git clone --single-branch -b feature-docker https://texassinuscenter:vqbwnqyDLqmk7cYDmCWQ@bitbucket.org/texassinuscenter/otcmeds.git
+#RUN git clone --single-branch -b feature-docker https://texassinuscenter:vqbwnqyDLqmk7cYDmCWQ@bitbucket.org/texassinuscenter/otcmeds.git
+
+RUN git clone https://github.com/ncellerino/todos.git
 
 # Create app directory
 WORKDIR /todos
