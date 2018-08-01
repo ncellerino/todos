@@ -1,0 +1,35 @@
+version: '3'
+services:
+  server:
+    container_name: todos-server
+    restart: always
+    #build server from Dockerfile
+    build: .    
+    #command: nodemon --inspect=9229
+    #image: appdemoinfra_api:latest
+    volumes:
+      - .:/usr/app/
+    ports:
+      - "8080:8080"      
+    depends_on:
+      - mongo
+      #- redis
+    environment:
+      NODE_ENV: "development"
+      PROCESS_TYPE: "web"
+      PORT: "8080"
+      DB_URI: mongodb://mongo:27018/todos
+
+      #REDIS_URI: redis
+      #REDIS_PORT: 6379
+  mongo:
+    image: mongo
+    command: mongod --port 27018
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27018:27018"
+  # redis:
+  #   image: redis
+  #   ports: 
+  #     - "6379:6379"

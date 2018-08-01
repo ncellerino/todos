@@ -3,19 +3,13 @@ FROM node:8
 RUN apt-get update
 RUN apt-get install -y git
 
-#RUN git clone --single-branch -b feature-docker https://texassinuscenter:vqbwnqyDLqmk7cYDmCWQ@bitbucket.org/texassinuscenter/otcmeds.git
-
 RUN git clone https://github.com/ncellerino/todos.git
 
 # Create app directory
 WORKDIR /todos
 
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-#COPY package*.json ./
-
-#RUN cd  /usr/src/app/otcmeds
 
 RUN npm install --only=production
 
