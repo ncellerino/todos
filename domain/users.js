@@ -1,11 +1,12 @@
-const usersDB = require('../db/user');
+const User = require('../db/user');
 
 exports.createUser = createUser;
 exports.getAll = getAll;
+exports.findByLogin = findByLogin;
 
 function createUser(userData) {
     return new Promise(function (resolve, reject) {
-        usersDB.saveUser(userData)
+        User.saveUser(userData)
             .then(user => resolve(user))
             .catch(err => reject(err))
     });
@@ -13,7 +14,7 @@ function createUser(userData) {
 
 function getAll() {
     return new Promise((resolve, reject) => {
-        usersDB.getAll()
+        User.getAll()
             .then(users => resolve(users))
             .catch(err => reject(err))
     });
@@ -21,7 +22,7 @@ function getAll() {
 
 function findByLogin(login) {
     return new Promise((resolve, reject) => {
-        usersDB.findByLogin(login).then(user => resolve(user))
+        User.findByLogin(login).then(user => resolve(user))
             .catch(err => reject(err))
     });
 }

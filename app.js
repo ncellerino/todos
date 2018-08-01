@@ -13,9 +13,8 @@ const httpServer = http.createServer(app);
 database.connectDatabase();
 
 // Start server
-//httpServer.listen(config.server.port, config.ip, function() {
-  httpServer.listen(config.server.port, '0.0.0.0',function() {
-	  logger.info('CORS-enabled Express server listening on %d, in %s mode', config.server.port, config.env);
+httpServer.listen(config.server.port, '0.0.0.0',function() {
+	  logger.info(`CORS-enabled Express server listening on ${config.server.port}, in ${config.env} mode`);
 });
 
 module.exports = app;

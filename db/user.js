@@ -77,34 +77,116 @@ let UserSchema = new Schema({
     }
 });
 
+/**
+ * instance methods
+ */
+UserSchema.methods = {
+	/**
+	 * Authenticate - check if the passwords are the same
+	 *
+	 * @param {String} plainText
+	 * @api public
+	 */
+    authenticate: function(plainText, cb) {
+        bcrypt.compare(plainText, this.password, cb);
+    },
 
-// Register the schema
-var User = mongoose.model('User', UserSchema);
-
-module.exports.User = User;
-
-// Public profile information
-UserSchema
-    .virtual('profile')
-    .get(() => {
+    profile: function () {
         return {
             'username': this.username,
             'firstName': this.firstName,
             'lastName': this.lastName,
             'email': this.email
         };
-    });
+    },
 
-// Non-sensitive info we'll be putting in the token
-UserSchema
-    .virtual('token')
-    .get(() => {
+    // Non-sensitive info we'll be putting in the token
+    token: function() {
         return {
             '_id': this._id,
             'username': this.username,
             'email': this.email
-        };
-    });
+        }
+    }
+}
+
+/**
+ * static methods
+ */
+UserSchema.statics = {
+    /**
+     * Save user - Save a new user in the database
+     *
+     * @param {Object} userData
+     * @api public
+     */
+    saveUser: (userData) => {
+        let user = new User(userData);
+        return new Promise((resolve, reject) => {
+            user.save()
+                .then(user => {
+                    logger.debug("User saved!");
+                    resolve(user);
+                })
+                .catch(err => {
+                    logger.error("Error saving user: " + err);
+                    reject(err);
+                })
+        })
+    },
+
+    findByLogin: (login) => {
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                $or: [{
+                    email: login.toLowerCase()
+                }, {
+                    username: login
+                }]
+            }, (err, user) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(user)
+                }
+            });
+        });
+    },
+
+    deleteUser: (id) => {
+        return new Promise((resolve, reject) => {
+            User.deleteOne({ '_id': id }, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve()
+                }
+            });
+        });
+    },
+
+    /**
+     * Get All users - Get all the stored users
+     *
+     * @api public
+     */
+    getAll: () => {
+        return new Promise((resolve, reject) => {
+            User.find({}, '-salt -password', (err, users) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(users)
+                }
+            });
+        });
+    }
+}
+
+
+// Register the schema
+var User = mongoose.model('User', UserSchema);
+module.exports = User;
 
 /**
  * Pre-save hook
@@ -126,90 +208,3 @@ UserSchema
             next();
         });
     });
-
-/**
- * Save user - Save a new user in the database
- *
- * @param {Object} userData
- * @api public
- */
-exports.saveUser = (userData) => {
-    let user = new User(userData);
-    return new Promise((resolve, reject) => {
-        user.save()
-            .then(user => {
-                logger.debug("User saved!");
-                resolve(user);
-            })
-            .catch(err => {
-                logger.error("Error saving user: " + err);
-                reject(err);
-            })
-    })
-}
-exports.findByLogin = findByLogin;
-exports.getAll = getAll;
-exports.delete = deleteUser;
-
-function findByLogin(login) {
-    return new Promise((resolve, reject) => {
-        User.findOne({
-            $or: [{
-                email: login.toLowerCase()
-            }, {
-                username: login
-            }]
-        }, (err, user) => {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(user)
-            }
-        });
-    });
-}
-
-/**
- * Get All users - Get all the stored users
- *
- * @api public
- */
-function getAll() {
-    return new Promise((resolve, reject) => {
-        User.find({}, '-salt -password', (err, users) => {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(users)
-            }
-        });
-    });
-}
-
-function deleteUser(id) {
-    return new Promise((resolve, reject) => {
-        User.deleteOne({ '_id': id }, (err, result) => {
-            if (err) {
-                reject(err)
-            } else {
-                resolve()
-            }
-        });
-    });
-}
-
-/**
- * model Methods
- */
-UserSchema.methods = {
-	/**
-	 * Authenticate - check if the passwords are the same
-	 *
-	 * @param {String} plainText
-	 * @api public
-	 */
-    authenticate: function (plainText, cb) {
-        bcrypt.compare(plainText, this.password, cb);
-    }
-
-}

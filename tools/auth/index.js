@@ -9,9 +9,9 @@ module.exports.signToken = signToken;
 function signToken(id) {
     return jwt.sign({
         _id: id
-    }, config.session.secret,
+    }, config.server.session.secret,
         {
-            expiresIn: config.session.expiresIn
+            expiresIn: config.server.session.expiresIn
         }
     );
 }

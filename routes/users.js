@@ -25,7 +25,7 @@ router.post('/register', (req, res, next) => {
     res.set('Authorization', 'Bearer ' + token);
 
     res.json(201, {
-			user: user.profile,
+			user: user.profile(),
 			token: token
 		});    
   }).catch(err => {

@@ -19,7 +19,7 @@ router.post('/local', function(req, res, next) {
 
         var token = auth.signToken(user._id, user.authorities);
         res.set('Authorization', 'Bearer ' + token);
-        res.json({
+        res.status(200).json({
             user: user,
             token: token
         });

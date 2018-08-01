@@ -7,22 +7,18 @@ chai.use(chaiHttp);
 const server = require('../../server');
 const should = chai.should();
 
-describe('/POST user registration', () => {
+describe('/POST user local auth', () => {
 
     let mail = new Date() + "@mail.com";
-    let user = {
-        "age": 33,
-        "email": mail,
-        "password": "3333",
-        "username": mail,
-        "firstName": "jorge",
-        "lastName": "cellerino"
+    let userLogin = {        
+        "username": "admin",
+        "password": "QKirtIXMt9V8ET6J"        
     }
-    it('it should register the new user', (done) => {
+    it('it should login the user', (done) => {
         chai.request(server)
-            .post('/users/register').send(user)
+            .post('/auth/local').send(userLogin)
             .end((err, res, body) => {
-                res.should.have.status(201);
+                res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.user.should.be.a('object');
                 res.body.user.email.should.be.a('String');
@@ -32,16 +28,6 @@ describe('/POST user registration', () => {
                 should.not.exist(res.body.user.password);
                 res.body.token.should.be.a('String');
 
-                done();
-            });
-    });
-
-    it('register same user - it should return error', (done) => {
-        chai.request(server)
-            .post('/users/register').send(user)
-            .end((err, res, body) => {
-                res.should.have.status(400);
-               
                 done();
             });
     });

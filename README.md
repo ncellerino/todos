@@ -18,6 +18,7 @@
 * LOGGER_LEVEL ('error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly'), default: info
 * LOGGER_ENABLED ('true' | 'false'), default: true
 * DB_URI: string to connecto to the database. default:mongodb://localhost:27017/todos  
+* DB_POPULATE: ('true' | 'false'), default: false
 
 ##Loggers
 * morgan: for http requests

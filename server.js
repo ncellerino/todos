@@ -23,3 +23,9 @@ app.use(errorHandler()); // Error handler - has to be last
 
 const routes = require('./routes/routes');
 routes.assignRoutes(app);
+
+if(config.database.populate) {
+    require('./tools/database/seed');
+}
+
+module.exports = app;

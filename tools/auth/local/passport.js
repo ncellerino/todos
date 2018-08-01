@@ -10,13 +10,7 @@ exports.setup = setup;
         passwordField: 'password' // this is the virtual field on the model
       },
       (email, password, done) => {
-        Users.findByLogin({
-          $or: [{
-            email: email.toLowerCase()
-          }, {
-            username: email
-          }]
-        }).then(user => {
+        Users.findByLogin(email).then(user => {
             if (!user) {
                 return done(null, false, {
                   message: 'This email is not registered.'
@@ -24,7 +18,7 @@ exports.setup = setup;
               } else {
                 user.authenticate(password, function(err, res) {
                     if (res) {
-                        return done(null, user.profile);
+                        return done(null, user.profile());
                     } else {
                         return done(null, false, {
                           message: 'This password is not correct.'

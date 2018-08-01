@@ -1,6 +1,6 @@
-const logger = require('../tools/logger');
+const logger = require('../logger');
 const mongoose = require('mongoose');
-const config = require('../config');
+const config = require('../../config');
 
 var currentRetry = 1;
 
