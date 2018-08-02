@@ -23,7 +23,7 @@ RESTful API built in Node, Express, Mongoose and MongoDB
 ### Run e2e tests
 * node_modules/mocha/bin/_mocha -u tdd --timeout 999999 --colors --require test/e2e/prepare test/e2e/*.js
 
-##Environment variables
+## Environment variables
 * NODE_ENV ('development' | 'production'): when development, it uses dotenv, to read the local .env file, that's the only difference
 * SESSION_SECRET: secret key to sign the json web token.
 * SESSION_EXPIRES_IN: json web token valid time.
@@ -33,14 +33,14 @@ RESTful API built in Node, Express, Mongoose and MongoDB
 * DB_URI: string to connec to to the database. Default: mongodb://localhost:27017/todos  
 * DB_POPULATE: ('true' | 'false'), default: false
 
-##Loggers
+### Loggers
 * morgan: for http requests
 * winston: for application logic
 
-##Database
+### Database
 * Mongo
 
-## Dependencies
+### Dependencies
 * joi
 * dotenv
 * morgan
@@ -51,7 +51,7 @@ RESTful API built in Node, Express, Mongoose and MongoDB
 * bcrypt
 * jsonwebtoken
 
-## Dev Dependencies
+### Dev Dependencies
 * chai
 * chai-http: for e2e tests
 * mocha
