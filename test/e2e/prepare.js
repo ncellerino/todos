@@ -10,6 +10,7 @@ prepare(function (done) {
 }, function (done) {
     // called after all test completes (regardless of errors)
     dbUtils.restoreDb().then(() => {
+        process.exit();
         done();
     });
 });

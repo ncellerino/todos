@@ -1,23 +1,36 @@
-# todos
+# todos REST API 
 
-### How do I get set up? ###
- ## Local development
- * run npm install
- * npm start
+RESTful API built in Node, Express, Mongoose and MongoDB
 
-## Run with Docker
+## Requirements
+- Node, Npm, Docker and MongoDB (for running the server without Docker)
+
+## Installation
+- Clone the repo: `git clone https://github.com/ncellerino/todos.git`
+- Install dependencies: `npm install`
+
+### Run the server
+- Start the server: `node server.js`
+
+### Run server with Docker
 * docker run -e "NODE_ENV=development" -e "PROCESS_TYPE=web" -e "PORT=8080" todos
 
-* Summary of set up
-* Configuration
+## How to run tests
+
+# Run e2e tests
+* node_modules/mocha/bin/_mocha -u tdd --timeout 999999 --colors test/unit/*/*.spec.js
+
+# Run e2e tests
+* node_modules/mocha/bin/_mocha -u tdd --timeout 999999 --colors --require test/e2e/prepare test/e2e/*.js
 
 ##Environment variables
 * NODE_ENV ('development' | 'production'): when development, it uses dotenv, to read the local .env file, that's the only difference
 * SESSION_SECRET: secret key to sign the json web token.
-* PORT: 
+* SESSION_EXPIRES_IN: json web token valid time.
+* PORT: the port where the server will listen requests. Default: 8080
 * LOGGER_LEVEL ('error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly'), default: info
 * LOGGER_ENABLED ('true' | 'false'), default: true
-* DB_URI: string to connecto to the database. default:mongodb://localhost:27017/todos  
+* DB_URI: string to connec to to the database. Default: mongodb://localhost:27017/todos  
 * DB_POPULATE: ('true' | 'false'), default: false
 
 ##Loggers
@@ -28,10 +41,10 @@
 * Mongo
 
 ## Dependencies
-* morgan
-* winston
 * joi
 * dotenv
+* morgan
+* winston
 * mongoose
 * passport
 * passport-local
@@ -43,9 +56,3 @@
 * chai-http: for e2e tests
 * mocha
 * sinon
-
-
-* Database configuration
-* How to run tests
-* Deployment instructions
-

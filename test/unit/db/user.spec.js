@@ -2,8 +2,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 const sinonTest = require('sinon-test')(sinon);
 
-var UserDB = require('../../db/user');
-var User = UserDB.User;
+var User = require('../../../db/user');
 
 var stubUser = {
     username: 'username',
@@ -87,7 +86,7 @@ describe('Test get all Users', () => {
         let expectedResult = [stubUser];
         let UserMock = sinon.mock(User);
         let stub = this.stub(User, 'find').yields(null, expectedResult);
-        UserDB.getAll().then(result => {
+        User.getAll().then(result => {
             sinon.assert.calledWith(stub, {
             });
             expect(result).to.exist;
@@ -102,8 +101,8 @@ describe('Test get all Users', () => {
         var UserMock = sinon.mock(User);
         var expectedResult = { status: false, error: "Something went wrong" };
         let stub = this.stub(User, 'find').yields(expectedResult, null);
-      //  UserMock.expects('find').yields(expectedResult, null);
-        UserDB.getAll().catch(err => {
+        //  UserMock.expects('find').yields(expectedResult, null);
+        User.getAll().catch(err => {
             sinon.assert.calledWith(stub, {
             });
             expect(err.status).to.not.be.true;
@@ -142,10 +141,10 @@ describe('Test save an User', () => {
 
 describe('Test delete an User', () => {
     it('should delete an user', sinonTest(function (done) {
-       // let UserMock = sinon.mock(User);
+        // let UserMock = sinon.mock(User);
         let userId = '123';
         let stub = this.stub(User, 'deleteOne').withArgs({ '_id': userId }).yields(null, null);
-        UserDB.delete(userId).then(function (result) {
+        User.deleteUser(userId).then(function (result) {
             sinon.assert.calledWith(stub, { '_id': userId });
             done();
         });
@@ -155,10 +154,10 @@ describe('Test delete an User', () => {
     it("should delete an user", sinonTest(function (done) {
         let userId = '123';
         let stub = this.stub(User, 'deleteOne').withArgs({ '_id': userId }).yields({ status: false }, null);
-        UserDB.delete(userId).catch(function (err) {
+        User.deleteUser(userId).catch(function (err) {
             sinon.assert.calledWith(stub, { '_id': userId });
             expect(err.status).to.not.be.true;
             done();
-        });       
+        });
     }));
 });
