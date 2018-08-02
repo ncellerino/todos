@@ -17,10 +17,10 @@ RESTful API built in Node, Express, Mongoose and MongoDB
 
 ## How to run tests
 
-# Run e2e tests
+### Run unit tests
 * node_modules/mocha/bin/_mocha -u tdd --timeout 999999 --colors test/unit/*/*.spec.js
 
-# Run e2e tests
+### Run e2e tests
 * node_modules/mocha/bin/_mocha -u tdd --timeout 999999 --colors --require test/e2e/prepare test/e2e/*.js
 
 ##Environment variables
