@@ -1,4 +1,4 @@
-# todos REST API 
+# Todos REST API 
 
 RESTful API built in Node, Express, Mongoose and MongoDB
 
