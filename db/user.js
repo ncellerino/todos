@@ -15,27 +15,7 @@ let UserSchema = new Schema({
     lastName: {
         type: String,
         required: true
-    },
-    username: {
-        type: String,
-        required: [true, 'Username required'],
-        validate: {
-            isAsync: true,
-            validator: (value, respond) => {
-                let self = this;
-                User.findOne({
-                    username: value
-                }, (err, user) => {
-                    if (err) return respond(false, 'Unable to check for username uniqueness due to database error');
-                    if (user) {
-                        if (self.id === user.id) return respond(true);
-                        return respond(false, 'The specified username address is already in use.');
-                    }
-                    return respond(true);
-                });
-            }
-        }
-    },
+    },    
     email: {
         type: String,
         lowercase: true,
@@ -92,8 +72,7 @@ UserSchema.methods = {
     },
 
     profile: function () {
-        return {
-            'username': this.username,
+        return {            
             'firstName': this.firstName,
             'lastName': this.lastName,
             'email': this.email
@@ -104,7 +83,6 @@ UserSchema.methods = {
     token: function() {
         return {
             '_id': this._id,
-            'username': this.username,
             'email': this.email
         }
     }
@@ -138,11 +116,7 @@ UserSchema.statics = {
     findByLogin: (login) => {
         return new Promise((resolve, reject) => {
             User.findOne({
-                $or: [{
-                    email: login.toLowerCase()
-                }, {
-                    username: login
-                }]
+                email: login.toLowerCase()
             }, (err, user) => {
                 if (err) {
                     reject(err)
@@ -185,7 +159,7 @@ UserSchema.statics = {
 
 
 // Register the schema
-var User = mongoose.model('User', UserSchema);
+let User = mongoose.model('User', UserSchema);
 module.exports = User;
 
 /**
@@ -193,7 +167,7 @@ module.exports = User;
  */
 UserSchema
     .pre('save', function (next) {
-        var user = this;
+        let user = this;
         if ((!user.isNew && !user.resetPassword) || user.facebook || user.google) return next();
         bcrypt.hash(user.password, saltRounds, function (err, hash) {
             if (err) {

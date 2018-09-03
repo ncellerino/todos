@@ -10,14 +10,14 @@ services:
     volumes:
       - .:/usr/app/
     ports:
-      - "8080:8080"      
+      - "9000:9000"      
     depends_on:
       - mongo
       #- redis
     environment:
       NODE_ENV: "development"
       PROCESS_TYPE: "web"
-      PORT: "8080"
+      PORT: "9000"
       DB_URI: mongodb://mongo:27018/todos
 
       #REDIS_URI: redis

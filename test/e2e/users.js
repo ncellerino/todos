@@ -14,7 +14,6 @@ describe('/POST user registration', () => {
         "age": 33,
         "email": mail,
         "password": "3333",
-        "username": mail,
         "firstName": "jorge",
         "lastName": "cellerino"
     }
@@ -26,7 +25,6 @@ describe('/POST user registration', () => {
                 res.body.should.be.a('object');
                 res.body.user.should.be.a('object');
                 res.body.user.email.should.be.a('String');
-                res.body.user.username.should.be.a('String');
                 res.body.user.firstName.should.be.a('String');
                 res.body.user.lastName.should.be.a('String');
                 should.not.exist(res.body.user.password);

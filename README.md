@@ -15,6 +15,10 @@ RESTful API built in Node, Express, Mongoose and MongoDB
 ### Run server with Docker
 * docker run -e "NODE_ENV=development" -e "PROCESS_TYPE=web" -e "PORT=8080" todos
 
+### Run server with Docker Compose
+* cd docker
+* docker-compose up
+
 ## How to run tests
 
 ### Run unit tests
@@ -27,7 +31,7 @@ RESTful API built in Node, Express, Mongoose and MongoDB
 * NODE_ENV ('development' | 'production'): when development, it uses dotenv, to read the local .env file, that's the only difference
 * SESSION_SECRET: secret key to sign the json web token.
 * SESSION_EXPIRES_IN: json web token valid time.
-* PORT: the port where the server will listen requests. Default: 8080
+* PORT: the port where the server will listen requests. Default: 9000
 * LOGGER_LEVEL ('error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly'), default: info
 * LOGGER_ENABLED ('true' | 'false'), default: true
 * DB_URI: string to connec to to the database. Default: mongodb://localhost:27017/todos  

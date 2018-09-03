@@ -25,7 +25,7 @@ RUN chown -R node:root /todos
 #COPY . .
 
 # app will bind to 8080 port 
-EXPOSE 8080
+EXPOSE 9000
 
 #run the server
 CMD [ "npm", "start"]

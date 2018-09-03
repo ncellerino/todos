@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../domain/users');
+const todos = require('../domain/todos');
 const auth = require('../tools/auth');
 
 /* POST create user. */
@@ -39,6 +40,19 @@ router.get('/', (req, res, next) => {
   users.getAll()
     .then(users => {
       res.send(users)
+    })
+    .catch(err => {
+      next(err);
+    })
+
+});
+
+/* GET users todos. */
+router.get('/:userId/todos', (req, res, next) => {
+  let userId = req.params.userId;
+  todos.getAllByUser(userId)
+    .then(todos => {
+      res.send(todos)
     })
     .catch(err => {
       next(err);

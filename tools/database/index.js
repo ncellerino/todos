@@ -30,13 +30,13 @@ mongoose.connection.on('close', function (err) {
 
 mongoose.connection.on('connected', function () {  
 	currentRetry = 1;
-	logger.info("mongodb connected....");
+	logger.debug("mongodb connected....");
 	logger.info("using database " + config.database.uri);
 });
 
 function connectDatabase() {
     // Connect to database
-    logger.info("connecting to mongodb....");
+    logger.debug("connecting to mongodb....");
     mongoose.connect(config.database.uri, { useNewUrlParser: true });
 }
 

@@ -6,7 +6,7 @@ exports.setup = setup;
 
  function setup(User, config) {
     passport.use(new LocalStrategy({
-        usernameField: 'username',
+        usernameField: 'email',
         passwordField: 'password' // this is the virtual field on the model
       },
       (email, password, done) => {

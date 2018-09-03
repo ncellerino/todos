@@ -9,9 +9,9 @@ const should = chai.should();
 
 describe('/POST user local auth', () => {
 
-    let mail = new Date() + "@mail.com";
+    let mail = "admin@admin.com";
     let userLogin = {        
-        "username": "admin",
+        "email": mail,
         "password": "QKirtIXMt9V8ET6J"        
     }
     it('it should login the user', (done) => {
@@ -21,8 +21,7 @@ describe('/POST user local auth', () => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.user.should.be.a('object');
-                res.body.user.email.should.be.a('String');
-                res.body.user.username.should.be.a('String');
+                res.body.user.email.should.be.a('String');                
                 res.body.user.firstName.should.be.a('String');
                 res.body.user.lastName.should.be.a('String');
                 should.not.exist(res.body.user.password);
