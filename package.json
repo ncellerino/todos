@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PROCESS_TYPE=web NODE_ENV=development PORT=9000 node server.js"
+    "start": "PROCESS_TYPE=web NODE_ENV=development PORT=9000 babel-node server.js",
+    "debug": "PROCESS_TYPE=web NODE_ENV=development PORT=9000 clear; nodemon --inspect --exec babel-node server.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.0",
@@ -26,10 +27,16 @@
     "winston": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "mocha": "^5.2.0",
     "mocha-prepare": "^0.1.0",
+    "nodemon": "^2.0.2",
     "sinon": "^6.1.4",
     "sinon-test": "^2.2.1"
   }

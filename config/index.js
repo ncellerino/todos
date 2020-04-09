@@ -1,19 +1,24 @@
 // load .env in local development
-if (process.env.NODE_ENV === 'development') {
-    require('dotenv').config({ silent: true })
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config({ silent: true });
 }
 
-const processType = process.env.PROCESS_TYPE
+let processType;
+if (process.env.PROCESS_TYPE) {
+  processType = process.env.PROCESS_TYPE;
+} else {
+  processType = "web";
+}
 
-let config
+let config;
 try {
-  config = require(`./${processType}`)
+  config = require(`./${processType}`);
 } catch (ex) {
-  if (ex.code === 'MODULE_NOT_FOUND') {
-    throw new Error(`No config for process type: ${processType}`)
+  if (ex.code === "MODULE_NOT_FOUND") {
+    throw new Error(`No config for process type: ${processType}`);
   }
 
-  throw ex
+  throw ex;
 }
 
-module.exports = config
+module.exports = config;
