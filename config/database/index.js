@@ -15,7 +15,7 @@ class Connection {
     this.connectDatabase(this.url);
     mongoose.connection.on("error", err => {
       if (err && err.state !== 2) {
-        this.reconnectDatabase(currentRetry);
+        this.reconnectDatabase(this.currentRetry);
       }
       console.error("MongoDB connection error: " + err);
     });

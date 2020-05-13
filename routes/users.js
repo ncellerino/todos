@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const users = require('../domain/users');
-const todos = require('../domain/todos');
+const users = require('../models/users');
+const todos = require('../models/todo.model');
 const auth = require('../tools/auth');
 
 /* POST create user. */
