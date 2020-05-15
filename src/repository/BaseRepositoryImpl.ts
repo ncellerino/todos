@@ -1,7 +1,5 @@
-import { IRead } from "./interfaces/IRead";
-import { IWrite } from "./interfaces/IWrite";
-import mongoose, { FilterQuery } from "mongoose";
-import { injectable } from "inversify";
+import mongoose from "mongoose";
+import { injectable, unmanaged } from "inversify";
 import { IBaseRepository } from "./interfaces/IBaseRepository";
 
 @injectable()
@@ -9,7 +7,7 @@ export class BaseRepositoryImpl<T extends mongoose.Document>
   implements IBaseRepository<T> {
   private model: mongoose.Model<T>;
 
-  constructor(model: mongoose.Model<T>) {
+  constructor(@unmanaged() model: mongoose.Model<T>) {
     this.model = model;
   }
 
