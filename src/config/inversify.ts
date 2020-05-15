@@ -9,7 +9,6 @@ import { TodoRepository } from "../repository/TodoRepository";
 
 const container = new Container();
 
-container.bind<ITodo>(TYPES.Todo).to(Todo);
 container.bind<IBaseRepository<ITodo>>(TYPES.TodoRepository).to(TodoRepository);
 container.bind<TodoService>(TYPES.TodoService).to(TodoServiceImpl);
 

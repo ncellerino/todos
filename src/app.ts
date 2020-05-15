@@ -4,6 +4,7 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import container from "./config/inversify";
 import { applyMiddleware } from "./utils/middleware";
 import middleware from "./middleware";
+import MongoConfig from "./config/database/MongoConfig";
 
 // Create a new express application instance
 const server = new InversifyExpressServer(container);
@@ -29,6 +30,9 @@ server.setConfig(app => {
     res.status(500).send("Internal Server Error");
   });
 });
+
+const dbConfig: MongoConfig = new MongoConfig();
+dbConfig.connectDatabase();
 
 let app = server.build();
 export default app;
