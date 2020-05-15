@@ -8,6 +8,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "bcrypt": "^3.0.0",
     "compression": "^1.7.3",
     "cookie-parser": "~1.4.3",
@@ -36,6 +37,7 @@
     "@babel/node": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.5",
+    "@types/app-root-path": "^1.2.4",
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.6",
     "@types/dotenv": "^8.2.0",

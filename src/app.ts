@@ -7,6 +7,8 @@ import middleware from "./middleware";
 import MongoConfig from "./config/database/MongoConfig";
 
 // Create a new express application instance
+conectDB();
+
 const server = new InversifyExpressServer(container);
 server.setConfig(app => {
   applyMiddleware(middleware, app);
@@ -31,8 +33,11 @@ server.setConfig(app => {
   });
 });
 
-const dbConfig: MongoConfig = new MongoConfig();
-dbConfig.connectDatabase();
-
-let app = server.build();
+let app: express.Application;
+app = server.build();
 export default app;
+
+async function conectDB() {
+  const dbConfig: MongoConfig = new MongoConfig();
+  dbConfig.connectDatabase();
+}

@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 import { DB_URI } from "../Environment";
-const logger = require("../../tools/logger");
+import { logger } from "../logger/Logger";
 
 export default class MongoConfig {
   private currentRetry: number = 1;
 
   constructor() {
-    logger.info("Establish new connection with url", DB_URI);
     mongoose.Promise = global.Promise;
     mongoose.set("useNewUrlParser", true);
     mongoose.set("useFindAndModify", false);
@@ -21,10 +20,15 @@ export default class MongoConfig {
     });
   }
 
-  connectDatabase(): void {
+  async connectDatabase(): Promise<void> {
     // Connect to database
-    logger.info("stablishing new connection with url....", DB_URI);
-    mongoose.connect(DB_URI, { useNewUrlParser: true });
+    logger.debug(`stablishing new connection with url....${DB_URI}`);
+    let result = await mongoose.connect(DB_URI, { useNewUrlParser: true });
+    if (result && result.connections && result.connections.length > 0) {
+      if (result.connections[0].readyState === 1) {
+        logger.debug(`Connected to mongodb ${DB_URI}`);
+      }
+    }
   }
 
   private reconnectDatabase(): void {
