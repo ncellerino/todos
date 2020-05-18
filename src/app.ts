@@ -33,8 +33,7 @@ server.setConfig(app => {
   });
 });
 
-let app: express.Application;
-app = server.build();
+let app: express.Application = server.build();
 export default app;
 
 async function conectDB() {

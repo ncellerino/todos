@@ -1,24 +1,30 @@
-import express, { Request, Response } from "express";
+import { Request } from "express";
 import {
   controller,
   httpPost,
-  requestParam,
   BaseHttpController,
-  HttpResponseMessage,
-  StringContent,
   httpGet
 } from "inversify-express-utils";
-import { TodoService } from "../services/todos.service";
+import { ITodoService } from "../services/todos.service";
 import { inject } from "inversify";
 import TYPES from "../types";
+import { ITodo } from "../models/Todo";
 
 @controller("/todos")
 export class TodoController extends BaseHttpController {
   @inject(TYPES.TodoService)
-  private todoService!: TodoService;
+  private todoService!: ITodoService;
 
   @httpGet("/")
   public async getTodos(req: Request) {
-    return this.json(this.todoService.getTodos(), 200);
+    let todos: ITodo[] = await this.todoService.getTodos();
+    return this.json(todos);
+  }
+
+  @httpPost("/")
+  public async addTodo(req: Request) {
+    var hero: ITodo = <ITodo>req.body;
+    let todo: ITodo = await this.todoService.createTodo(hero);
+    return this.json(todo);
   }
 }
