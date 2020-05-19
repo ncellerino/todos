@@ -23,9 +23,10 @@ export class BaseRepositoryImpl<T extends mongoose.Document>
     return this.model.findByIdAndRemove(id).exec();
   }
 
-  update(model: T): Promise<T> {
-    return this.model.updateOne(model._id, model).exec();
+  update(id: string | any, model: T): Promise<T | null> {
+    return this.model.findByIdAndUpdate(id, model, { new: true }).exec();
   }
+
   findAll(): Promise<T[]> {
     return this.model.find({}).exec();
   }

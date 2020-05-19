@@ -2,30 +2,40 @@ import { Request, Response } from "express";
 import {
   controller,
   httpPost,
-  JsonContent,
+  requestParam,
   httpGet,
-  interfaces
+  httpDelete,
+  httpPatch
 } from "inversify-express-utils";
 import { ITodoService } from "../services/todos.service";
 import { inject } from "inversify";
 import TYPES from "../types";
 import { ITodo } from "../models/Todo";
 import { BaseCrudController } from "./BaseCrudController";
-import { networkInterfaces } from "os";
 
 @controller("/todos")
 export class TodoController extends BaseCrudController {
   @inject(TYPES.TodoService)
   private todoService!: ITodoService;
 
-  public getById(req: Request, res: Response): void {
-    throw new Error("Method not implemented.");
+  @httpGet("/:id")
+  public async getById(
+    @requestParam("id") id: string,
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    let todo: ITodo | null = await this.todoService.getById(id);
+    if (todo) {
+      res.status(200).json(todo);
+    } else {
+      res.status(400).send();
+    }
   }
   @httpPost("/")
   public async create(req: Request, res: Response): Promise<void> {
     const hero: ITodo = <ITodo>req.body;
     let todo: ITodo = await this.todoService.createTodo(hero);
-    res.status(200).json(todo);
+    res.status(201).json(todo);
   }
 
   @httpGet("/")
@@ -33,10 +43,33 @@ export class TodoController extends BaseCrudController {
     let todos: ITodo[] = await this.todoService.getTodos();
     res.status(200).json(todos);
   }
-  public update(req: Request, res: Response): void {
-    throw new Error("Method not implemented.");
+
+  @httpPatch("/:id")
+  public async update(
+    @requestParam("id") id: string,
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    const hero: ITodo = <ITodo>req.body;
+    let todo: ITodo | null = await this.todoService.update(id, hero);
+    if (todo) {
+      res.status(200).json(todo);
+    } else {
+      res.status(404).send();
+    }
   }
-  public delete(req: Request, res: Response): void {
-    throw new Error("Method not implemented.");
+
+  @httpDelete("/:id")
+  public async delete(
+    @requestParam("id") id: string,
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    let todo: ITodo | null = await this.todoService.delete(id);
+    if (todo) {
+      res.status(204).send();
+    } else {
+      res.status(404).send();
+    }
   }
 }

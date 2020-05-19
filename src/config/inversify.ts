@@ -1,6 +1,6 @@
 import { Container } from "inversify";
 import "reflect-metadata";
-import "../controllers/todos.controller";
+import "../controllers/TodoController";
 import { ITodoService, TodoServiceImpl } from "../services/todos.service";
 import TYPES from "../types";
 import Todo, { ITodo, ITodoModel } from "../models/Todo";
