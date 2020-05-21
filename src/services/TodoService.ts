@@ -4,7 +4,7 @@ import { inject, injectable } from "inversify";
 import { IBaseRepository } from "../repository/interfaces/IBaseRepository";
 export interface ITodoService {
   getTodos(): Promise<Array<TodoDTO>>;
-  createTodo(data: TodoDTO): Promise<TodoDTO>;
+  create(data: TodoDTO): Promise<TodoDTO>;
   getById(id: string): Promise<TodoDTO | null>;
   update(id: string, data: TodoDTO): Promise<TodoDTO | null>;
   delete(id: string): Promise<TodoDTO | null>;
@@ -24,7 +24,7 @@ export class TodoServiceImpl implements ITodoService {
     return todos.map(todo => this.toDTO(todo));
   }
 
-  createTodo(data: TodoDTO): Promise<TodoDTO> {
+  create(data: TodoDTO): Promise<TodoDTO> {
     return this.todoRepository.create(this.toModel(data));
   }
 

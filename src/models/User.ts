@@ -37,6 +37,17 @@ interface IUserSchema extends Document {
   password: string;
 }
 
+export interface UserDTO {
+  _id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export interface UserAuthDTO extends UserDTO {
+  password: string;
+}
+
 // Virtuals
 UserSchema.virtual("fullName").get(function(this: {
   firstName: string;

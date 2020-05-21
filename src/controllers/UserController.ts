@@ -7,16 +7,16 @@ import {
   httpDelete,
   httpPatch
 } from "inversify-express-utils";
-import { ITodoService } from "../services/TodoService";
+import { IUserService } from "../services/UserService";
 import { inject } from "inversify";
 import TYPES from "../types";
-import { TodoDTO } from "../models/Todo";
 import { BaseCrudController } from "./BaseCrudController";
+import { UserDTO } from "../models/User";
 
-@controller("/todos")
-export class TodoController extends BaseCrudController {
-  @inject(TYPES.TodoService)
-  private todoService!: ITodoService;
+@controller("/users")
+export class UserController extends BaseCrudController {
+  @inject(TYPES.UserService)
+  private userService!: IUserService;
 
   @httpGet("/:id")
   public async getById(
@@ -24,23 +24,23 @@ export class TodoController extends BaseCrudController {
     req: Request,
     res: Response
   ): Promise<void> {
-    let todo: TodoDTO | null = await this.todoService.getById(id);
-    if (todo) {
-      res.status(200).json(todo);
+    let user: UserDTO | null = await this.userService.getById(id);
+    if (user) {
+      res.status(200).json(user);
     } else {
       res.status(400).send();
     }
   }
   @httpPost("/")
   public async create(req: Request, res: Response): Promise<void> {
-    let todo: TodoDTO = await this.todoService.create(<TodoDTO>req.body);
-    res.status(201).json(todo);
+    let user: UserDTO = await this.userService.create(<UserDTO>req.body);
+    res.status(201).json(user);
   }
 
   @httpGet("/")
   public async getAll(req: Request, res: Response): Promise<void> {
-    let todos: TodoDTO[] = await this.todoService.getTodos();
-    res.status(200).json(todos);
+    let users: UserDTO[] = await this.userService.getAll();
+    res.status(200).json(users);
   }
 
   @httpPatch("/:id")
@@ -49,12 +49,12 @@ export class TodoController extends BaseCrudController {
     req: Request,
     res: Response
   ): Promise<void> {
-    let todo: TodoDTO | null = await this.todoService.update(
+    let user: UserDTO | null = await this.userService.update(
       id,
-      <TodoDTO>req.body
+      <UserDTO>req.body
     );
-    if (todo) {
-      res.status(200).json(todo);
+    if (user) {
+      res.status(200).json(user);
     } else {
       res.status(404).send();
     }
@@ -66,8 +66,8 @@ export class TodoController extends BaseCrudController {
     req: Request,
     res: Response
   ): Promise<void> {
-    let todo: TodoDTO | null = await this.todoService.delete(id);
-    if (todo) {
+    let user: UserDTO | null = await this.userService.delete(id);
+    if (user) {
       res.status(204).send();
     } else {
       res.status(404).send();
