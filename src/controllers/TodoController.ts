@@ -10,7 +10,7 @@ import {
 import { ITodoService } from "../services/todos.service";
 import { inject } from "inversify";
 import TYPES from "../types";
-import { ITodo } from "../models/Todo";
+import { TodoDTO } from "../models/Todo";
 import { BaseCrudController } from "./BaseCrudController";
 
 @controller("/todos")
@@ -24,7 +24,7 @@ export class TodoController extends BaseCrudController {
     req: Request,
     res: Response
   ): Promise<void> {
-    let todo: ITodo | null = await this.todoService.getById(id);
+    let todo: TodoDTO | null = await this.todoService.getById(id);
     if (todo) {
       res.status(200).json(todo);
     } else {
@@ -33,14 +33,14 @@ export class TodoController extends BaseCrudController {
   }
   @httpPost("/")
   public async create(req: Request, res: Response): Promise<void> {
-    const hero: ITodo = <ITodo>req.body;
-    let todo: ITodo = await this.todoService.createTodo(hero);
+    const hero: TodoDTO = <TodoDTO>req.body;
+    let todo: TodoDTO = await this.todoService.createTodo(hero);
     res.status(201).json(todo);
   }
 
   @httpGet("/")
   public async getAll(req: Request, res: Response): Promise<void> {
-    let todos: ITodo[] = await this.todoService.getTodos();
+    let todos: TodoDTO[] = await this.todoService.getTodos();
     res.status(200).json(todos);
   }
 
@@ -50,8 +50,8 @@ export class TodoController extends BaseCrudController {
     req: Request,
     res: Response
   ): Promise<void> {
-    const hero: ITodo = <ITodo>req.body;
-    let todo: ITodo | null = await this.todoService.update(id, hero);
+    const hero: TodoDTO = <TodoDTO>req.body;
+    let todo: TodoDTO | null = await this.todoService.update(id, hero);
     if (todo) {
       res.status(200).json(todo);
     } else {
@@ -65,7 +65,7 @@ export class TodoController extends BaseCrudController {
     req: Request,
     res: Response
   ): Promise<void> {
-    let todo: ITodo | null = await this.todoService.delete(id);
+    let todo: TodoDTO | null = await this.todoService.delete(id);
     if (todo) {
       res.status(204).send();
     } else {

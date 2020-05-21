@@ -27,6 +27,13 @@ interface ITodoBase extends Document {
   completed: boolean;
 }
 
+export interface TodoDTO {
+  _id?: string;
+  title: string;
+  description?: string;
+  completed: boolean;
+}
+
 /**
  * Interface for not populated model
  */
