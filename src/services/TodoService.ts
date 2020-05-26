@@ -21,7 +21,14 @@ export class TodoServiceImpl implements ITodoService {
 
   async getTodos(): Promise<Array<TodoDTO>> {
     let todos: ITodo[] = await this.todoRepository.findAll();
-    return todos.map(todo => this.toDTO(todo));
+    let dtos: TodoDTO[] = [];
+    todos.forEach(todo => {
+      const dto = this.toDTO(todo);
+      if (dto) {
+        dtos.push();
+      }
+    });
+    return dtos;
   }
 
   create(data: TodoDTO): Promise<TodoDTO> {
@@ -37,13 +44,17 @@ export class TodoServiceImpl implements ITodoService {
     return this.todoRepository.delete(id);
   }
 
-  private toDTO(todo: ITodo | null): TodoDTO {
-    return {
-      _id: todo!._id,
-      title: todo!.title,
-      description: todo!.description,
-      completed: todo!.completed
-    };
+  private toDTO(todo: ITodo | null): TodoDTO | null {
+    let dto: TodoDTO | null = null;
+    if (todo) {
+      dto = {
+        _id: todo!._id,
+        title: todo!.title,
+        description: todo!.description,
+        completed: todo!.completed
+      };
+    }
+    return dto;
   }
 
   private toModel(dto: TodoDTO): ITodo {

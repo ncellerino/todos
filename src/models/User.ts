@@ -19,7 +19,7 @@ const UserSchema: Schema = new Schema({
     required: [true, "User email required"],
     unique: true
   },
-  password: {
+  saltedPassword: {
     type: String,
     required: true
   }
@@ -34,7 +34,7 @@ interface IUserSchema extends Document {
   lastName: string;
   address?: string;
   email: string;
-  password: string;
+  saltedPassword: string;
 }
 
 export interface UserDTO {

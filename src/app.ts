@@ -3,7 +3,8 @@ import express from "express";
 import { InversifyExpressServer } from "inversify-express-utils";
 import container from "./config/inversify";
 import { applyMiddleware } from "./utils/middleware";
-import middleware from "./middleware";
+import middleware from "./middleware/Index";
+import errorHandlers from "./middleware/ErrorHandlers";
 import MongoConfig from "./config/database/MongoConfig";
 
 // Create a new express application instance
@@ -33,7 +34,12 @@ server.setConfig(app => {
   });
 });
 
+server.setErrorConfig(app => {
+  applyMiddleware(errorHandlers, app);
+});
+
 let app: express.Application = server.build();
+
 export default app;
 
 async function conectDB() {

@@ -12,8 +12,9 @@ import { inject } from "inversify";
 import TYPES from "../types";
 import { TodoDTO } from "../models/Todo";
 import { BaseCrudController } from "./BaseCrudController";
+import { HTTP404Error } from "../utils/HttpErrors";
 
-@controller("/todos")
+@controller("/api/todos")
 export class TodoController extends BaseCrudController {
   @inject(TYPES.TodoService)
   private todoService!: ITodoService;
@@ -28,7 +29,8 @@ export class TodoController extends BaseCrudController {
     if (todo) {
       res.status(200).json(todo);
     } else {
-      res.status(400).send();
+      throw new HTTP404Error("Todo not found");
+      //res.status(400).send();
     }
   }
   @httpPost("/")
