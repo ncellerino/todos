@@ -5,7 +5,7 @@ import {
   requestParam,
   httpGet,
   httpDelete,
-  httpPatch
+  httpPatch,
 } from "inversify-express-utils";
 import { IUserService } from "../services/UserService";
 import { inject } from "inversify";
@@ -13,7 +13,7 @@ import TYPES from "../types";
 import { BaseCrudController } from "./BaseCrudController";
 import { UserDTO } from "../models/User";
 
-@controller("/users")
+@controller("/api/users")
 export class UserController extends BaseCrudController {
   @inject(TYPES.UserService)
   private userService!: IUserService;

@@ -5,24 +5,28 @@ import { injectable, inject } from "inversify";
 export interface IUserService {
   getAll(): Promise<Array<UserDTO>>;
   create(data: UserDTO): Promise<UserDTO>;
-  getById(id: string): Promise<UserDTO | null>;
+  getById(id: string | undefined): Promise<UserDTO | null>;
   update(id: string, data: UserDTO): Promise<UserDTO | null>;
   delete(id: string): Promise<UserDTO | null>;
 }
 
 @injectable()
-export class TodoServiceImpl implements IUserService {
-  @inject(TYPES.TodoRepository)
+export class UserServiceImpl implements IUserService {
+  @inject(TYPES.UserRepository)
   private userRepository!: IBaseRepository<IUser>;
 
-  async getById(id: string): Promise<UserDTO | null> {
-    let user: IUser | null = await this.userRepository.findById(id);
-    return this.toDTO(user);
+  async getById(id: string | undefined): Promise<UserDTO | null> {
+    let userDto: UserDTO | null = null;
+    if (id) {
+      let user: IUser | null = await this.userRepository.findById(id);
+      userDto = this.toDTO(user);
+    }
+    return userDto;
   }
 
   async getAll(): Promise<Array<UserDTO>> {
     let users: IUser[] = await this.userRepository.findAll();
-    return users.map(user => this.toDTO(user));
+    return users.map((user) => this.toDTO(user));
   }
 
   create(data: UserDTO): Promise<UserDTO> {
@@ -43,7 +47,7 @@ export class TodoServiceImpl implements IUserService {
       _id: user!._id,
       firstName: user!.firstName,
       lastName: user!.lastName,
-      email: user!.email
+      email: user!.email,
     };
   }
 
@@ -52,7 +56,7 @@ export class TodoServiceImpl implements IUserService {
       _id: dto._id,
       firstName: dto.firstName,
       lastName: dto.lastName,
-      email: dto.email
+      email: dto.email,
     });
   }
 }

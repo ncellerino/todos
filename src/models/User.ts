@@ -1,28 +1,26 @@
-import { Schema, Document, model } from "mongoose";
+import { Schema, Document, model, PassportLocalSchema } from "mongoose";
+import passportLocalMongoose from "passport-local-mongoose";
+
 // Schema
 const UserSchema: Schema = new Schema({
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   address: {
     type: String,
-    required: false
+    required: false,
   },
   email: {
     type: String,
     lowercase: true,
     required: [true, "User email required"],
-    unique: true
+    unique: true,
   },
-  saltedPassword: {
-    type: String,
-    required: true
-  }
 });
 
 /**
@@ -41,6 +39,13 @@ export interface UserDTO {
   _id?: string;
   firstName: string;
   lastName: string;
+  address?: string;
+  email: string;
+  token?: string;
+}
+
+export interface UserCredentialsDTO {
+  password: string;
   email: string;
 }
 
@@ -49,7 +54,7 @@ export interface UserAuthDTO extends UserDTO {
 }
 
 // Virtuals
-UserSchema.virtual("fullName").get(function(this: {
+UserSchema.virtual("fullName").get(function (this: {
   firstName: string;
   lastName: string;
 }) {
@@ -60,5 +65,10 @@ export interface IUser extends IUserSchema {
   fullName: string;
 }
 
+UserSchema.plugin(passportLocalMongoose, {
+  usernameField: "email",
+  usernameQueryFields: ["email"],
+});
+
 // Default export
-export default model<IUser>("User", UserSchema);
+export default model<IUser>("User", UserSchema as PassportLocalSchema);

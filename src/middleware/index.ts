@@ -1,7 +1,14 @@
 import {
   handleBodyRequestParsing,
   handleCompression,
-  handleCors
+  handleCors,
 } from "./Common";
 
-export default [handleBodyRequestParsing, handleCompression, handleCors];
+import { handleAuthentication } from "./Auth";
+
+export default [
+  handleBodyRequestParsing,
+  handleCompression,
+  handleCors,
+  handleAuthentication,
+];

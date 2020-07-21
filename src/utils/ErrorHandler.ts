@@ -1,9 +1,13 @@
 import { NextFunction, Response } from "express";
-import { HTTP404Error, HTTPClientError } from "./HttpErrors";
+import { HTTP404Error, HTTPClientError, HTTP401Error } from "./HttpErrors";
 import { logger } from "../config/logger/Logger";
 
 export const notFoundError = () => {
-  throw new HTTP404Error("Method not found.");
+  throw new HTTP404Error("Resource not found.");
+};
+
+export const unauthorizedError = () => {
+  throw new HTTP401Error("Unauthorized");
 };
 
 export const clientError = (err: Error, res: Response, next: NextFunction) => {
