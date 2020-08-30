@@ -1,13 +1,15 @@
-import { NextFunction, Response } from "express";
-import { HTTP404Error, HTTPClientError, HTTP401Error } from "./HttpErrors";
-import { logger } from "../config/logger/Logger";
+import { NextFunction, Response } from 'express';
+import { HTTPClientError } from './httpErrors/HTTPClientError';
+import { HTTP404Error } from './httpErrors/Http404Error';
+import { HTTP401Error } from './httpErrors/Http401Error';
+import { logger } from '../config/logger/Logger';
 
 export const notFoundError = () => {
-  throw new HTTP404Error("Resource not found.");
+  throw new HTTP404Error('Resource not found.');
 };
 
 export const unauthorizedError = () => {
-  throw new HTTP401Error("Unauthorized");
+  throw new HTTP401Error('Unauthorized');
 };
 
 export const clientError = (err: Error, res: Response, next: NextFunction) => {
@@ -22,8 +24,8 @@ export const clientError = (err: Error, res: Response, next: NextFunction) => {
 
 export const serverError = (err: Error, res: Response, next: NextFunction) => {
   logger.error(err);
-  if (process.env.NODE_ENV === "production") {
-    res.status(500).send("Internal Server Error");
+  if (process.env.NODE_ENV === 'production') {
+    res.status(500).send('Internal Server Error');
   } else {
     res.status(500).send(err.stack);
   }

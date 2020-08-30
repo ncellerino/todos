@@ -3,8 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "PROCESS_TYPE=web NODE_ENV=development PORT=9000 babel-node server.js",
-    "debug": "clear; PROCESS_TYPE=web NODE_ENV=development PORT=9000 nodemon --inspect --exec babel-node server.js",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "build": "tsc --project tsconfig.json",
+    "start:dev": "nodemon",
+    "start": "PROCESS_TYPE=web NODE_ENV=development PORT=9000 ts-node /src/server.ts",
+    "debug": "clear; PROCESS_TYPE=web NODE_ENV=development PORT=9000 nodemon npm run build -- -w",
     "tsc": "tsc"
   },
   "dependencies": {
@@ -48,6 +52,7 @@
     "@types/mongodb": "^3.5.17",
     "@types/mongoose": "^5.7.19",
     "@types/passport": "^1.0.3",
+    "@types/passport-jwt": "^3.0.3",
     "@types/passport-local": "^1.0.33",
     "@types/passport-local-mongoose": "^4.0.13",
     "babel-loader": "^8.1.0",
@@ -55,8 +60,13 @@
     "chai-http": "^4.0.0",
     "mocha": "^5.2.0",
     "mocha-prepare": "^0.1.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.1",
     "sinon": "^6.1.4",
-    "sinon-test": "^2.2.1"
+    "sinon-test": "^2.2.1",
+    "ts-node": "^9.0.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.0.2"
   }
 }

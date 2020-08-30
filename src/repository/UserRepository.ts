@@ -1,6 +1,6 @@
-import { BaseRepositoryImpl } from "./BaseRepositoryImpl";
-import User, { IUser, UserDTO } from "../models/User";
-import { IBaseRepository } from "./interfaces/IBaseRepository";
+import { BaseRepositoryImpl } from './BaseRepositoryImpl';
+import User, { IUser, UserDTO } from '../models/User';
+import { IBaseRepository } from './interfaces/IBaseRepository';
 
 export interface IUserRepository extends IBaseRepository<IUser> {
   register(model: IUser, password: string): Promise<IUser>;

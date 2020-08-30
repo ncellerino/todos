@@ -1,9 +1,9 @@
-import Todo, { ITodo, TodoDTO } from "../models/Todo";
-import TYPES from "../types";
-import { inject, injectable } from "inversify";
-import { IBaseRepository } from "../repository/interfaces/IBaseRepository";
+import Todo, { ITodo, TodoDTO } from '../models/Todo';
+import TYPES from '../types';
+import { inject, injectable } from 'inversify';
+import { IBaseRepository } from '../repository/interfaces/IBaseRepository';
 export interface ITodoService {
-  getTodos(): Promise<Array<TodoDTO>>;
+  getTodos(): Promise<TodoDTO[]>;
   create(data: TodoDTO): Promise<TodoDTO>;
   getById(id: string): Promise<TodoDTO | null>;
   update(id: string, data: TodoDTO): Promise<TodoDTO | null>;
@@ -15,14 +15,14 @@ export class TodoServiceImpl implements ITodoService {
   private todoRepository!: IBaseRepository<ITodo>;
 
   async getById(id: string): Promise<TodoDTO | null> {
-    let todo: ITodo | null = await this.todoRepository.findById(id);
+    const todo: ITodo | null = await this.todoRepository.findById(id);
     return this.toDTO(todo);
   }
 
-  async getTodos(): Promise<Array<TodoDTO>> {
-    let todos: ITodo[] = await this.todoRepository.findAll();
-    let dtos: TodoDTO[] = [];
-    todos.forEach(todo => {
+  async getTodos(): Promise<TodoDTO[]> {
+    const todos: ITodo[] = await this.todoRepository.findAll();
+    const dtos: TodoDTO[] = [];
+    todos.forEach((todo) => {
       const dto = this.toDTO(todo);
       if (dto) {
         dtos.push();
@@ -51,7 +51,7 @@ export class TodoServiceImpl implements ITodoService {
         _id: todo!._id,
         title: todo!.title,
         description: todo!.description,
-        completed: todo!.completed
+        completed: todo!.completed,
       };
     }
     return dto;
@@ -62,7 +62,7 @@ export class TodoServiceImpl implements ITodoService {
       _id: dto._id,
       title: dto.title,
       description: dto.description,
-      completed: dto.completed
+      completed: dto.completed,
     });
   }
 }

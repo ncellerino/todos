@@ -1,4 +1,4 @@
-import mongoose = require("mongoose");
+import mongoose = require('mongoose');
 export interface IWrite<T> {
   delete(id: string): Promise<T | null>;
   create(model: T): Promise<T>;

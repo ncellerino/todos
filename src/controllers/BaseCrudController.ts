@@ -1,5 +1,5 @@
-import { BaseController } from "./BaseController";
-import { Request, Response } from "express";
+import { BaseController } from './BaseController';
+import { Request, Response } from 'express';
 
 export abstract class BaseCrudController extends BaseController {
   public abstract create(req: Request, res: Response): Promise<void>;

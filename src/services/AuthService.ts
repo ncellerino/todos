@@ -1,13 +1,8 @@
-import User, {
-  IUser,
-  UserAuthDTO,
-  UserDTO,
-  UserCredentialsDTO,
-} from "../models/User";
-import TYPES from "../types";
-import { injectable, inject } from "inversify";
-import { IUserRepository } from "../repository/UserRepository";
-import jwt from "jsonwebtoken";
+import User, { IUser, UserAuthDTO, UserDTO, UserCredentialsDTO } from '../models/User';
+import TYPES from '../types';
+import { injectable, inject } from 'inversify';
+import { IUserRepository } from '../repository/UserRepository';
+import jwt from 'jsonwebtoken';
 export interface IAuthService {
   login(user: UserCredentialsDTO): Promise<UserDTO | null>;
   register(user: UserAuthDTO): Promise<UserDTO>;
@@ -19,10 +14,7 @@ export class AuthServiceImpl implements IAuthService {
   private userRepository!: IUserRepository;
 
   async login(credentials: UserCredentialsDTO): Promise<UserDTO | null> {
-    let user = await this.userRepository.authenticate(
-      credentials.email,
-      credentials.password
-    );
+    const user = await this.userRepository.authenticate(credentials.email, credentials.password);
     let dto = null;
     if (user) {
       dto = this.toDTO(user);
@@ -32,17 +24,14 @@ export class AuthServiceImpl implements IAuthService {
   }
 
   async register(user: UserAuthDTO): Promise<UserDTO> {
-    const userRegistered: IUser = await this.userRepository.register(
-      this.toModel(user),
-      user.password
-    );
-    let dto = this.toDTO(userRegistered);
+    const userRegistered: IUser = await this.userRepository.register(this.toModel(user), user.password);
+    const dto = this.toDTO(userRegistered);
     dto.token = this.signToken(userRegistered);
     return dto;
   }
 
   private signToken(user: IUser): string {
-    return jwt.sign({ id: user.id, email: user.email }, "ILovePokemon");
+    return jwt.sign({ id: user.id, email: user.email }, 'ILovePokemon');
   }
 
   private toDTO(user: IUser | null): UserDTO {

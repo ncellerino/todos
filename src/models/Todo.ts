@@ -1,20 +1,20 @@
-import { Document, Model, model, Schema } from "mongoose";
-import { IUser } from "./User";
+import { Document, Model, model, Schema } from 'mongoose';
+import { IUser } from './User';
 
 const TodoSchema: Schema = new Schema(
   {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
-      required: false
+      ref: 'User',
+      required: false,
     },
-    completed: Boolean
+    completed: Boolean,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 /**
@@ -38,26 +38,22 @@ export interface TodoDTO {
  * Interface for not populated model
  */
 export interface ITodo extends ITodoBase {
-  user: IUser["_id"];
+  user: IUser['_id'];
 }
 /**
  * Interface for populated model
  */
-export interface ITodo_Populated extends ITodoBase {
+export interface ITodoPopulated extends ITodoBase {
   user: IUser;
 }
 
 // Static methods
-TodoSchema.statics.findWithUser = async function(
-  id: string
-): Promise<ITodo_Populated> {
-  return this.findById(id)
-    .populate("user")
-    .exec();
+TodoSchema.statics.findWithUser = async function (id: string): Promise<ITodoPopulated> {
+  return this.findById(id).populate('user').exec();
 };
 
 export interface ITodoModel extends Model<ITodo> {
-  findWithUser(id: string): Promise<ITodo_Populated>;
+  findWithUser(id: string): Promise<ITodoPopulated>;
 }
 
-export default model<ITodo, ITodoModel>("Todo", TodoSchema);
+export default model<ITodo, ITodoModel>('Todo', TodoSchema);

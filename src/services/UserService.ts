@@ -1,9 +1,9 @@
-import User, { IUser, UserDTO } from "../models/User";
-import { IBaseRepository } from "../repository/interfaces/IBaseRepository";
-import TYPES from "../types";
-import { injectable, inject } from "inversify";
+import User, { IUser, UserDTO } from '../models/User';
+import { IBaseRepository } from '../repository/interfaces/IBaseRepository';
+import TYPES from '../types';
+import { injectable, inject } from 'inversify';
 export interface IUserService {
-  getAll(): Promise<Array<UserDTO>>;
+  getAll(): Promise<UserDTO[]>;
   create(data: UserDTO): Promise<UserDTO>;
   getById(id: string | undefined): Promise<UserDTO | null>;
   update(id: string, data: UserDTO): Promise<UserDTO | null>;
@@ -18,14 +18,14 @@ export class UserServiceImpl implements IUserService {
   async getById(id: string | undefined): Promise<UserDTO | null> {
     let userDto: UserDTO | null = null;
     if (id) {
-      let user: IUser | null = await this.userRepository.findById(id);
+      const user: IUser | null = await this.userRepository.findById(id);
       userDto = this.toDTO(user);
     }
     return userDto;
   }
 
-  async getAll(): Promise<Array<UserDTO>> {
-    let users: IUser[] = await this.userRepository.findAll();
+  async getAll(): Promise<UserDTO[]> {
+    const users: IUser[] = await this.userRepository.findAll();
     return users.map((user) => this.toDTO(user));
   }
 

@@ -1,6 +1,6 @@
-import { Router, Request, Response } from "express";
-import * as ErrorHandler from "../utils/ErrorHandler";
-import { NextFunction } from "connect";
+import { Router, Request, Response } from 'express';
+import * as ErrorHandler from '../utils/ErrorHandler';
+import { NextFunction } from 'connect';
 
 const handle404Error = (router: Router) => {
   router.use((req: Request, res: Response) => {
@@ -26,9 +26,4 @@ const handleServerError = (router: Router) => {
   });
 };
 
-export default [
-  handle404Error,
-  handle401Error,
-  handleClientError,
-  handleServerError,
-];
+export default [handle404Error, handle401Error, handleClientError, handleServerError];

@@ -1,10 +1,9 @@
-import mongoose from "mongoose";
-import { injectable, unmanaged } from "inversify";
-import { IBaseRepository } from "./interfaces/IBaseRepository";
+import mongoose from 'mongoose';
+import { injectable, unmanaged } from 'inversify';
+import { IBaseRepository } from './interfaces/IBaseRepository';
 
 @injectable()
-export class BaseRepositoryImpl<T extends mongoose.Document>
-  implements IBaseRepository<T> {
+export class BaseRepositoryImpl<T extends mongoose.Document> implements IBaseRepository<T> {
   protected model: mongoose.Model<T>;
 
   constructor(@unmanaged() model: mongoose.Model<T>) {
