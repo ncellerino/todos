@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import path from 'path';
 import express from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import container from './config/Inversify/Container';
@@ -7,6 +8,7 @@ import { applyMiddleware } from './utils/middleware';
 import middleware from './middleware/Index';
 import errorHandlers from './middleware/ErrorHandlers';
 import MongoConfig from './config/database/MongoConfig';
+import { CLIENT_APP_LOCATION, SERVER_ROOT_DIR } from './config/Environment';
 
 // Create a new express application instance
 conectDB();
@@ -15,14 +17,6 @@ const server = new InversifyExpressServer(container, null, null, null, AuthProvi
 
 server.setConfig((router) => {
   applyMiddleware(middleware, router);
-  // setup express middleware logging and error handling
-  router.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    next(err);
-  });
-
-  router.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    res.status(500).send('Internal Server Error');
-  });
 });
 
 server.setErrorConfig((router) => {
@@ -30,6 +24,10 @@ server.setErrorConfig((router) => {
 });
 
 const app: express.Application = server.build();
+
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.resolve(path.join(SERVER_ROOT_DIR, CLIENT_APP_LOCATION, 'build', 'index.html')));
+// });
 
 export default app;
 

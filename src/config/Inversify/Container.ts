@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import '../../controllers/TodoController';
 import '../../controllers/UserController';
 import '../../controllers/AuthController';
+import '../../controllers/StaticController';
 import { ITodoService, TodoServiceImpl } from '../../services/TodoService';
 import { IUserService, UserServiceImpl } from '../../services/UserService';
 

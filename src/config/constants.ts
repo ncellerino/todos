@@ -13,4 +13,5 @@ export class Constants {
   name: string = process.env.DB_NAME || 'todos';
   host: string = process.env.DB_HOST || 'localhost';
   port: string = process.env.DB_PORT || '2017';
+  clientDirLocation: string = process.env.CLIENT_DIR_LOCATION || "/../../..'";
 }
